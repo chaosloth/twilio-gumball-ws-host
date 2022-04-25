@@ -126,7 +126,8 @@ const performUserVerification = function (message) {
     .verificationChecks.create({ to: message.address, code: message.token })
     .then((verification_check) => {
       console.log("Attempting to verify user, check:", verification_check);
-      if (verification_check.status ?? "approved") {
+
+      if (verification_check?.status == "approved") {
         notifyClients({ action: "dispense" });
       } else {
         notifyClients({ action: "incorrect" });
