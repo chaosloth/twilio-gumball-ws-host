@@ -1,8 +1,170 @@
-import * as React from 'react';
-import {Theme} from '@twilio-paste/core/theme';
+import React, { useCallback } from "react";
+import useWebSocket, { ReadyState } from "react-use-websocket";
+import { useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
-const App: React.FC = ({children}) => {
-  return <Theme.Provider theme="default">{children}</Theme.Provider>;
+import { Loading } from "./components/Loading";
+import { IndexPage } from "./pages/IndexPage";
+import { Channels } from "./pages/Channels";
+import { Sending } from "./pages/Sending";
+import { OCR } from "./pages/OCR";
+import { Validating } from "./pages/Validating";
+import { Incorrect } from "./pages/Incorrect";
+import { Dispense } from "./pages/Dispense";
+import { Error } from "./pages/Error";
+
+import { Button } from "@twilio-paste/core/button";
+
+import UserContext from "./UserContext";
+
+const App: React.FC = ({ children }) => {
+  //Public API that will echo messages sent to it back to the client
+  const [socketUrl, setSocketUrl] = React.useState("ws://192.168.1.215:5001");
+  const navigate = useNavigate();
+
+  const [name, setName] = React.useState<string>("unknown");
+  const [phone, setPhone] = React.useState<string>("");
+  const [email, setEmail] = React.useState<string>("");
+  const [lastAddress, setLastAddress] = React.useState<string>("");
+
+  const DEFAULT_TIMEOUT = 30;
+  const [gameTimeout, setGameTimeoutCounter] = React.useState(DEFAULT_TIMEOUT);
+  React.useEffect(() => {
+    gameTimeout > 0 &&
+      setTimeout(() => setGameTimeoutCounter(gameTimeout - 1), 1000);
+  }, [gameTimeout]);
+
+  const { sendMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl, {
+    shouldReconnect: (closeEvent) => true,
+    reconnectAttempts: 1000000,
+    reconnectInterval: 3000,
+    onOpen: () => console.log("WS Opened"),
+    onMessage: (message) => {
+      try {
+        console.log(message.data);
+        const json = JSON.parse(message.data);
+        switch (json.action) {
+          case "route":
+            if (json?.route) {
+              console.log("Navigating to: ", json.route);
+              navigate(json.route);
+            }
+            break;
+          case "start":
+            // this.user = lastJsonMessage.user;
+            setName(json.user.name);
+            setPhone(json.user.phone);
+            setEmail(json.user.email);
+            setGameTimeoutCounter(DEFAULT_TIMEOUT);
+            navigate("/channels");
+            break;
+          case "ocr":
+            navigate("/ocr");
+            break;
+          case "error":
+            console.error("Uhh, something broken", json);
+            navigate("/error");
+            break;
+          case "reset":
+            setGameTimeoutCounter(DEFAULT_TIMEOUT);
+            navigate("/");
+            break;
+          case "dispense":
+            navigate("/dispense");
+            break;
+          case "incorrect":
+            navigate("/incorrect");
+            break;
+          case "time":
+            return;
+          default:
+            console.log("Received unknown WS JSON msg", json);
+        }
+      } catch (err) {
+        console.error("Error parsing", err);
+      }
+    },
+  });
+
+  const handleManualReset = () => {
+    setGameTimeoutCounter(DEFAULT_TIMEOUT);
+    navigate("/");
+  };
+
+  const sendVerification = (method: string, address: string): void => {
+    console.log("Requesting verification token via ", method, address);
+    const request = {
+      action: "generate",
+      method: method,
+      address: address,
+    };
+    setLastAddress(address);
+    navigate("/sending");
+    sendMessage(JSON.stringify(request));
+  };
+
+  const doVerification = (token: string): void => {
+    console.log("Verifying token", token);
+    const request = {
+      action: "verify",
+      token: token,
+      address: lastAddress,
+    };
+    navigate("/validating");
+    sendMessage(JSON.stringify(request));
+  };
+
+  const handleClickSendMessage = useCallback(() => sendMessage("Hello"), []);
+
+  const connectionStatus = {
+    [ReadyState.CONNECTING]: "Connecting",
+    [ReadyState.OPEN]: "Open",
+    [ReadyState.CLOSING]: "Closing",
+    [ReadyState.CLOSED]: "Closed",
+    [ReadyState.UNINSTANTIATED]: "Uninstantiated",
+  }[readyState];
+
+  // const pageStyle = {
+  //   background: "linear-gradient(180deg,rgba(2,99,224,0),rgba(2,99,224,.06))",
+  //   width: "100vw",
+  //   height: "100vh",
+  // };
+
+  const pageStyle = {
+    background: "#FFF5FD",
+    width: "100vw",
+    height: "100vh",
+  };
+
+  return (
+    <div style={pageStyle}>
+      <UserContext.Provider value={{ name, phone, email }}>
+        <React.Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path="" element={<IndexPage />} />
+            <Route
+              path="/channels"
+              element={<Channels verifyVia={sendVerification} />}
+            />
+            <Route path="/sending" element={<Sending />} />
+            <Route
+              path="/ocr"
+              element={<OCR onVerification={doVerification} />}
+            />
+            <Route path="/validating" element={<Validating />} />
+            <Route path="/incorrect" element={<Incorrect />} />
+            <Route path="/dispense" element={<Dispense />} />
+            <Route path="/error" element={<Error />} />
+          </Routes>
+          {gameTimeout <= 0 && (
+            <Button variant="secondary" onClick={handleManualReset}>
+              Reset Game
+            </Button>
+          )}
+        </React.Suspense>
+      </UserContext.Provider>
+    </div>
+  );
 };
 
 export default App;

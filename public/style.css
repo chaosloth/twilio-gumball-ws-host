@@ -1,0 +1,11 @@
+html,
+body,
+#app,
+#app>div,
+#root {
+    height: 100%
+}
+
+.paste-theme-provider {
+    height: 100vh;
+}

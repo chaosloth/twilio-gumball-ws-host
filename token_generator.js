@@ -1,6 +1,8 @@
-const Twilio = require('twilio');
+// const Twilio = require("twilio");
+// const config = require("./config");
 
-const config = require('./config');
+import Twilio from "twilio";
+import config from "./config.js";
 
 const AccessToken = Twilio.jwt.AccessToken;
 const SyncGrant = AccessToken.SyncGrant;
@@ -26,15 +28,15 @@ function tokenGenerator(identity) {
 
   // Point to a particular Sync service, or use the account default Service
   const syncGrant = new SyncGrant({
-    serviceSid: config.TWILIO_SYNC_SERVICE_SID || 'default'
+    serviceSid: config.TWILIO_SYNC_SERVICE_SID || "default",
   });
   token.addGrant(syncGrant);
 
   // Serialize the token to a JWT string and include it in a JSON response
   return {
     identity: token.identity,
-    token: token.toJwt()
+    token: token.toJwt(),
   };
 }
 
-module.exports = tokenGenerator;
+export default tokenGenerator;

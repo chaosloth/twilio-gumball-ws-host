@@ -1,32 +1,29 @@
-import * as React from 'react';
-import {styled} from '@twilio-paste/core/styling-library';
-import {Box, BoxStyleProps} from '@twilio-paste/core/box';
-import {Anchor} from '@twilio-paste/core/anchor';
-import {Button} from '@twilio-paste/core/button';
-import {Heading} from '@twilio-paste/core/heading';
-import {PlusIcon} from '@twilio-paste/icons/esm/PlusIcon';
-
-interface FancyBoxProps {
-  padding: BoxStyleProps['padding'];
-}
-const FancyBox: React.FC<FancyBoxProps> = styled(Box)({
-  width: '40%',
-});
+import React from "react";
+import { Card } from "@twilio-paste/core/card";
+import { Heading } from "@twilio-paste/core/heading";
+import { Text } from "@twilio-paste/core/text";
+import { Flex, Paragraph } from "@twilio-paste/core";
+import { Spinner } from "@twilio-paste/spinner";
 
 export const IndexPage: React.FC = () => {
   return (
-    <Box margin="space60">
-      <Heading as="h1" variant="heading10">
-        Start here.
-      </Heading>
-      <Button variant="primary">
-        <PlusIcon decorative />
-        Primary button
-      </Button>
-      <FancyBox padding="space90">Fancy box</FancyBox>
-      <Anchor href="https://paste.twilio.design" showExternal>
-        Paste Design System
-      </Anchor>
-    </Box>
+    <Flex vAlignContent="center" hAlignContent="center" height="100vh" grow>
+      <Card padding="space70">
+        <Text as="div" textAlign="center">
+          <Heading as="h4" variant="heading40">
+            Twilio Red 2022
+          </Heading>
+          <Paragraph>Scan your badge to start</Paragraph>
+          <Flex hAlignContent="center" vertical>
+            <Spinner
+              size="sizeIcon110"
+              color="colorTextSuccess"
+              decorative={false}
+              title="Loading"
+            />
+          </Flex>
+        </Text>
+      </Card>
+    </Flex>
   );
 };

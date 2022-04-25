@@ -1,41 +1,17 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
-import {Stack} from '@twilio-paste/core/stack';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import {IndexPage} from './pages/IndexPage';
-import {Loading} from './components/Loading';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { Theme } from "@twilio-paste/core/theme";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const Page1 = React.lazy(async () => import('./pages/Page1'));
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const Page2 = React.lazy(async () => import('./pages/Page2'));
-
-const Page3 = React.lazy(async () => import('./pages/Page3'));
-
-export const Index: React.FC = () => {
+export const Index: React.FC = (props) => {
   return (
-    <App>
-      <React.Suspense fallback={<Loading />}>
-        <BrowserRouter>
-          <Stack orientation="horizontal" spacing="space20">
-            <Link to="/">Home</Link>
-            <Link to="/page1">page 1</Link>
-            <Link to="/page2">page 2</Link>
-            <Link to="/page3">page 3</Link>
-          </Stack>
-          <Routes>
-            <Route path="" element={<IndexPage />} />
-            <Route path="/page1" element={<Page1 />} />
-            <Route path="/page2" element={<Page2 />} />
-            <Route path="/page3" element={<Page3 />} />
-          </Routes>
-        </BrowserRouter>
-      </React.Suspense>
-    </App>
+    <BrowserRouter>
+      <Theme.Provider theme="default">
+        <App></App>
+      </Theme.Provider>
+    </BrowserRouter>
   );
 };
 
@@ -43,7 +19,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Index />
   </React.StrictMode>,
-  document.querySelector('#root')
+  document.querySelector("#root")
 );
 
 /**

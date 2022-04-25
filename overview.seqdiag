@@ -1,0 +1,11 @@
+AE->Phone: Scan QR
+Phone->Segment: Get user details
+Segment->App Server: Event (Identify)
+App Server->Tablet: WS Offer options
+Tablet->App Server: WS Chosen channel
+App Server->Twilio: WS Generate verification (Phone, Method)
+Twilio->User: Token
+App Server->Tablet: WS Prompt for input
+Tablet->Google:Transcribe text
+Tablet->App Server: WS Validate (Token)
+App Server->ESP: WS Dispense (Duration)
