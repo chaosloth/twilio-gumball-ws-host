@@ -224,7 +224,7 @@ class handwriting {
             else results = response[1][0][1];
             if (!!options.numOfWords) {
               results = results.filter(function (result) {
-                return result.length == options.numOfWords;
+                return result.length === options.numOfWords;
               });
             }
             if (!!options.numOfReturn) {
@@ -241,6 +241,8 @@ class handwriting {
               new Error("can't connect to recognition server")
             );
             break;
+          default:
+            callback(undefined, new Error("Unexpected result code"));
         }
       }
     });

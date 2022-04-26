@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import useWebSocket, { ReadyState } from "react-use-websocket";
+import React from "react";
+import useWebSocket from "react-use-websocket";
 import { useNavigate } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 
@@ -19,7 +19,9 @@ import UserContext from "./UserContext";
 
 const App: React.FC = ({ children }) => {
   //Public API that will echo messages sent to it back to the client
-  const [socketUrl, setSocketUrl] = React.useState("ws://192.168.1.215:5001");
+  const WS_HOST = window.location.origin.replace(/^http/, "ws");
+
+  const [socketUrl] = React.useState(WS_HOST);
   const navigate = useNavigate();
 
   const [name, setName] = React.useState<string>("unknown");
@@ -34,7 +36,7 @@ const App: React.FC = ({ children }) => {
       setTimeout(() => setGameTimeoutCounter(gameTimeout - 1), 1000);
   }, [gameTimeout]);
 
-  const { sendMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl, {
+  const { sendMessage } = useWebSocket(socketUrl, {
     shouldReconnect: (closeEvent) => true,
     reconnectAttempts: 1000000,
     reconnectInterval: 3000,
@@ -51,7 +53,6 @@ const App: React.FC = ({ children }) => {
             }
             break;
           case "start":
-            // this.user = lastJsonMessage.user;
             setName(json.user.name);
             setPhone(json.user.phone);
             setEmail(json.user.email);
@@ -113,22 +114,6 @@ const App: React.FC = ({ children }) => {
     navigate("/validating");
     sendMessage(JSON.stringify(request));
   };
-
-  const handleClickSendMessage = useCallback(() => sendMessage("Hello"), []);
-
-  const connectionStatus = {
-    [ReadyState.CONNECTING]: "Connecting",
-    [ReadyState.OPEN]: "Open",
-    [ReadyState.CLOSING]: "Closing",
-    [ReadyState.CLOSED]: "Closed",
-    [ReadyState.UNINSTANTIATED]: "Uninstantiated",
-  }[readyState];
-
-  // const pageStyle = {
-  //   background: "linear-gradient(180deg,rgba(2,99,224,0),rgba(2,99,224,.06))",
-  //   width: "100vw",
-  //   height: "100vh",
-  // };
 
   const pageStyle = {
     background: "#FFF5FD",

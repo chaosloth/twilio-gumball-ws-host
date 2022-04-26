@@ -11,12 +11,7 @@ import UserContext from "../UserContext";
 export const Validating: React.FC = () => {
   const user = React.useContext(UserContext);
 
-  const [showReset, setShowReset] = React.useState(false);
   const navigate = useNavigate();
-
-  React.useEffect(() => {
-    setTimeout(() => setShowReset(true), 60000);
-  }, []);
 
   const [counter, setCounter] = React.useState(60);
   React.useEffect(() => {

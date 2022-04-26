@@ -6,10 +6,8 @@ import { Flex, Paragraph, Stack } from "@twilio-paste/core";
 import { Spinner } from "@twilio-paste/spinner";
 import { Button } from "@twilio-paste/core/button";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../UserContext";
 
 export const Incorrect: React.FC = () => {
-  const user = React.useContext(UserContext);
   const navigate = useNavigate();
 
   const [counter, setCounter] = React.useState(15);

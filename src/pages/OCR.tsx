@@ -2,7 +2,7 @@ import * as React from "react";
 import { Card } from "@twilio-paste/core/card";
 import { Button } from "@twilio-paste/core/button";
 import { Text } from "@twilio-paste/core/text";
-import { Flex, Stack, Alert, Paragraph } from "@twilio-paste/core";
+import { Flex, Stack, Alert } from "@twilio-paste/core";
 import { useTheme } from "@twilio-paste/theme";
 import { default as Handwriting } from "../HandwritingCanvas.js";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ export const OCR: React.FC<OCRProps> = (props) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const [handwriting, setHandwriting] = React.useState(new Handwriting());
+  const [handwriting] = React.useState(new Handwriting());
   const [ocrResult, setOcrResult] = React.useState("");
   const [isProcessing, setIsProcessing] = React.useState(false);
   const [haveCode, setHaveCode] = React.useState(false);
@@ -57,7 +57,7 @@ export const OCR: React.FC<OCRProps> = (props) => {
         setHaveCode(true);
       }
     });
-  }, []);
+  }, [handwriting, theme.textColors.colorTextInverse]);
 
   const [counter, setCounter] = React.useState(30);
 

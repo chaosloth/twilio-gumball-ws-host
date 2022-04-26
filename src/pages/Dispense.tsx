@@ -3,8 +3,6 @@ import { Card } from "@twilio-paste/core/card";
 import { Heading } from "@twilio-paste/core/heading";
 import { Text } from "@twilio-paste/core/text";
 import { Flex, Paragraph, Stack } from "@twilio-paste/core";
-import { Spinner } from "@twilio-paste/spinner";
-import { Button } from "@twilio-paste/core/button";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../UserContext";
 
@@ -18,9 +16,9 @@ export const Dispense: React.FC = () => {
     counter > 0 &&
       setTimeout(() => {
         setCounter(counter - 1);
-        if (counter == 1) navigate("/");
+        if (counter === 1) navigate("/");
       }, 1000);
-  }, [counter]);
+  }, [counter, navigate]);
 
   const styles = {
     animation: "flip 0.6s infinite linear",
@@ -40,7 +38,7 @@ export const Dispense: React.FC = () => {
           </Paragraph>
           <Flex hAlignContent="center" vertical>
             <Paragraph>
-              <img width="400px" style={styles} src="uni.jpeg" />
+              <img alt="Unicorn" width="400px" style={styles} src="uni.jpeg" />
             </Paragraph>
           </Flex>
         </Text>

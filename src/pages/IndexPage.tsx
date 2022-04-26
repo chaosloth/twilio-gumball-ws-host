@@ -3,7 +3,6 @@ import { Card } from "@twilio-paste/core/card";
 import { Heading } from "@twilio-paste/core/heading";
 import { Text } from "@twilio-paste/core/text";
 import { Flex, Paragraph } from "@twilio-paste/core";
-import { Spinner } from "@twilio-paste/spinner";
 
 export const IndexPage: React.FC = () => {
   const styles = {
@@ -19,7 +18,7 @@ export const IndexPage: React.FC = () => {
           </Heading>
           <Paragraph>Scan your badge to start</Paragraph>
           <Flex hAlignContent="center" vertical>
-            <img width="100px" style={styles} src="candy.png" />
+            <img alt="Candy" width="100px" style={styles} src="candy.png" />
           </Flex>
         </Text>
       </Card>

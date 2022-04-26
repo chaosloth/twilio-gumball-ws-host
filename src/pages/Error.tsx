@@ -3,7 +3,7 @@ import { Card } from "@twilio-paste/core/card";
 import { Button } from "@twilio-paste/core/button";
 import { Heading } from "@twilio-paste/core/heading";
 import { Text } from "@twilio-paste/core/text";
-import { Flex, Paragraph, Stack } from "@twilio-paste/core";
+import { Flex, Paragraph } from "@twilio-paste/core";
 import { useNavigate } from "react-router-dom";
 
 export const Error: React.FC = () => {
