@@ -9,3 +9,21 @@ body,
 .paste-theme-provider {
     height: 100vh;
 }
+
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+
+  @keyframes flip {
+    from {
+      transform: scaleX(-1);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }

@@ -22,6 +22,10 @@ export const Dispense: React.FC = () => {
       }, 1000);
   }, [counter]);
 
+  const styles = {
+    animation: "flip 0.6s infinite linear",
+  };
+
   return (
     <Flex vAlignContent="center" hAlignContent="center" height="100vh" grow>
       <Card padding="space70">
@@ -36,12 +40,7 @@ export const Dispense: React.FC = () => {
           </Paragraph>
           <Flex hAlignContent="center" vertical>
             <Paragraph>
-              <Spinner
-                size="sizeIcon110"
-                color="colorTextSuccess"
-                decorative={false}
-                title="Loading"
-              />
+              <img width="400px" style={styles} src="uni.jpeg" />
             </Paragraph>
           </Flex>
         </Text>
