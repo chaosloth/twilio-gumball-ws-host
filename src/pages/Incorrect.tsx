@@ -16,10 +16,10 @@ export const Incorrect: React.FC = () => {
   }, [counter]);
 
   return (
-    <Flex vAlignContent="center" hAlignContent="center" height="100vh" grow>
-      <Card padding="space70">
+    <Flex padding="space200" hAlignContent="center" height="100vh" grow>
         <Text as="div" textAlign="center">
-          <Heading as="h1" variant="heading20">
+        <img alt="candy" src="candy.png" className="candy"/>
+          <Heading as="h2" variant="heading10">
             Hmmm...That's not right
           </Heading>
 
@@ -33,7 +33,6 @@ export const Incorrect: React.FC = () => {
               />
             </Paragraph>
           </Flex>
-        </Text>
 
         <Flex vAlignContent="center" hAlignContent="center" grow>
           <Stack
@@ -41,7 +40,7 @@ export const Incorrect: React.FC = () => {
             spacing="space60"
           >
             <Button
-              variant="primary"
+              variant="destructive"
               fullWidth={true}
               onClick={() => navigate("/ocr")}
             >
@@ -49,7 +48,7 @@ export const Incorrect: React.FC = () => {
             </Button>
 
             <Button
-              variant="secondary"
+              variant="destructive_secondary"
               fullWidth={true}
               disabled={counter > 0}
               onClick={() => navigate("/channels")}
@@ -59,7 +58,7 @@ export const Incorrect: React.FC = () => {
             </Button>
           </Stack>
         </Flex>
-      </Card>
+        </Text>
     </Flex>
   );
 };

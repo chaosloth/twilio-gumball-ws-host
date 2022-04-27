@@ -6,6 +6,7 @@ import { Flex, Stack, Alert } from "@twilio-paste/core";
 import { useTheme } from "@twilio-paste/theme";
 import { default as Handwriting } from "../HandwritingCanvas.js";
 import { useNavigate } from "react-router-dom";
+import { Heading } from "@twilio-paste/core/heading";
 
 interface OCRProps {
   onVerification: (token: string) => void;
@@ -22,7 +23,7 @@ export const OCR: React.FC<OCRProps> = (props) => {
 
   // Set display size (vw/vh).
   const canvasWidth = (80 * window.innerWidth) / 100;
-  const canvasHeight = (60 * window.innerHeight) / 100 || 766;
+  const canvasHeight = (30 * window.innerHeight) / 100 || 766;
 
   const handleDoneClick = () => {
     if (!haveCode) {
@@ -43,6 +44,7 @@ export const OCR: React.FC<OCRProps> = (props) => {
   const canvasStyle = {
     cursor: "crosshair",
     backgroundColor: theme.backgroundColors.colorBackgroundInverse,
+    borderRadius: "3%"
   };
 
   React.useEffect(() => {
@@ -74,17 +76,14 @@ export const OCR: React.FC<OCRProps> = (props) => {
 
   return (
     <>
-      <Flex vAlignContent="center" hAlignContent="center" height="100vh" grow>
+      <Flex padding="space200" hAlignContent="center" height="100vh" grow>
         <Stack orientation="vertical" spacing="space60">
-          <Alert variant="neutral">
-            <Text as="span">
-              <strong>
+        <img alt="candy" src="candy.png" className="candy"/>
+            <Heading as="h3" variant="heading30">
                 Using your finger, write the verification code you just received
-              </strong>
-            </Text>
-          </Alert>
-          <Flex vAlignContent="center" hAlignContent="center">
-            <Card padding="space70">
+            </Heading>
+          <Flex vAlignContent="center" hAlignContent="center" >
+            <div className="card">
               <Stack orientation="vertical" spacing="space60">
                 <canvas
                   id="can"
@@ -94,14 +93,10 @@ export const OCR: React.FC<OCRProps> = (props) => {
                 ></canvas>
 
                 <Stack
-                  orientation={["vertical", "vertical", "horizontal"]}
-                  spacing="space40"
+                  orientation={["vertical",  "horizontal"]}
+                  spacing="space80"
                 >
-                  {haveCode && (
-                    <Text as="span">
-                      I think you wrote <strong> {ocrResult}</strong>
-                    </Text>
-                  )}
+                  
                   <Button
                     variant="primary"
                     fullWidth={true}
@@ -116,7 +111,7 @@ export const OCR: React.FC<OCRProps> = (props) => {
                     fullWidth={true}
                     onClick={handleClear}
                   >
-                    Clear
+                    Clear Screen
                   </Button>
                   <Button
                     variant="secondary"
@@ -127,9 +122,14 @@ export const OCR: React.FC<OCRProps> = (props) => {
                     Request new code
                     {counter > 0 && " in " + counter}
                   </Button>
+                  {haveCode && (
+                    <Text as="span">
+                      I think you wrote <strong> {ocrResult}</strong>
+                    </Text>
+                  )}
                 </Stack>
               </Stack>
-            </Card>
+            </div>
           </Flex>
         </Stack>
       </Flex>

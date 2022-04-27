@@ -10,17 +10,20 @@ export const Error: React.FC = () => {
   const navigate = useNavigate();
   return (
     <Flex vAlignContent="center" hAlignContent="center" height="100vh" grow>
-      <Card padding="space70">
+      
         <Text as="div" textAlign="center">
-          <Heading as="h4" variant="heading40">
-            Opps !
+          <Heading as="h2" variant="heading40">
+            Opps!
           </Heading>
-          <Paragraph>Looks like we hit a snag</Paragraph>
-          <Button variant="primary" onClick={() => navigate("/")}>
+          <br></br>
+          <br></br>
+          <Heading as="h3" variant="heading30">Looks like we hit a snag</Heading>
+          <br></br>
+          <Button variant="destructive_secondary" onClick={() => navigate("/")}>
             Reset Game
           </Button>
         </Text>
-      </Card>
+      
     </Flex>
   );
 };

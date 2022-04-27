@@ -21,33 +21,31 @@ export const Dispense: React.FC = () => {
   }, [counter, navigate]);
 
   const styles = {
-    animation: "flip 0.6s infinite linear",
+    animation: "rotation 4s infinite linear",
   };
 
   return (
-    <Flex vAlignContent="center" hAlignContent="center" height="100vh" grow>
-      <Card padding="space70">
+    <Flex padding="space200" hAlignContent="center" height="100vh" grow>
+  
         <Text as="div" textAlign="center">
-          <Heading as="h1" variant="heading10">
+          <Heading as="h2" variant="heading10">
             It's really you!
           </Heading>
-          <Paragraph>
+          <Heading as="h3" variant="heading20">
             {user.name}, Thanks for participating in RED 2022.
             <br />
             We can't wait to see <strong>what you build!</strong>
-          </Paragraph>
+          </Heading>
           <Flex hAlignContent="center" vertical>
-            <Paragraph>
-              <img alt="Unicorn" width="400px" style={styles} src="uni.jpeg" />
-            </Paragraph>
+            <img alt="Candy" width="250px" style={styles} src="candy.png" />
           </Flex>
-        </Text>
+       
         <Flex vAlignContent="center" hAlignContent="center" grow>
           <Stack orientation="horizontal" spacing="space60">
-            <Text as="span">Game will reset in {counter}</Text>
+          <Heading as="h3" variant="heading30">Game will reset in {counter}</Heading>
           </Stack>
         </Flex>
-      </Card>
+        </Text>
     </Flex>
   );
 };

@@ -22,6 +22,15 @@ export const Index: React.FC = (props) => {
 
   return (
     <div className="funkyBg" style={pageStyle}>
+      <style>
+      @import url('http://fonts.cdnfonts.com/css/willy-wonka');
+      @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+      </style>
+      <img className="logo" alt="logo" src="twilio.png"/>
+      <img className="borderImage" alt="Candy-border" src="candy-border.png"/>
+      <div className="footer">
+         <p className="footerText">Powered by Twilio Verify <img className="footerLogo" alt="twilio-logo" src="twilio.png"/></p>
+      </div>
       <BrowserRouter>
         <CustomizationProvider baseTheme="default" theme={customStyle}>
           <App></App>

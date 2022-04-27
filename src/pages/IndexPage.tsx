@@ -1,5 +1,4 @@
 import React from "react";
-import { Card } from "@twilio-paste/core/card";
 import { Heading } from "@twilio-paste/core/heading";
 import { Text } from "@twilio-paste/core/text";
 import { Flex, Paragraph } from "@twilio-paste/core";
@@ -10,18 +9,20 @@ export const IndexPage: React.FC = () => {
   };
 
   return (
-    <Flex vAlignContent="center" hAlignContent="center" height="100vh" grow>
-      <Card padding="space70">
+    <Flex paddingTop="space200" hAlignContent="center" height="100vh" grow>
         <Text as="div" textAlign="center">
-          <Heading as="h4" variant="heading40">
-            Twilio Red 2022
+          <Heading id="Wonka" as="h1" variant="heading10">
+            Candy
           </Heading>
-          <Paragraph>Scan your badge to start</Paragraph>
+          <Heading as="h2" variant="heading40">
+            MACHINE
+          </Heading>
           <Flex hAlignContent="center" vertical>
-            <img alt="Candy" width="100px" style={styles} src="candy.png" />
+            <img alt="Candy" width="250px" style={styles} src="candy.png" />
           </Flex>
+          <Heading as="h3" variant="heading30">Scan your badge to start</Heading>
         </Text>
-      </Card>
+     
     </Flex>
   );
 };

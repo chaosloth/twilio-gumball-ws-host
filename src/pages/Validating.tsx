@@ -19,13 +19,13 @@ export const Validating: React.FC = () => {
   }, [counter]);
 
   return (
-    <Flex vAlignContent="center" hAlignContent="center" height="100vh" grow>
-      <Card padding="space70">
+    <Flex padding="space200" hAlignContent="center" height="100vh" grow>
         <Text as="div" textAlign="center">
-          <Heading as="h1" variant="heading10">
+        <img alt="candy" src="candy.png" className="candy"/>
+          <Heading as="h2" variant="heading10">
             Hang tight, {user.name}!
           </Heading>
-          <Paragraph>Thanks! We're securely verifying your input now</Paragraph>
+          <Heading as="h3" variant="heading30">Thanks! We're securely verifying your input now</Heading>
           <Flex hAlignContent="center" vertical>
             <Paragraph>
               <Spinner
@@ -36,11 +36,11 @@ export const Validating: React.FC = () => {
               />
             </Paragraph>
           </Flex>
-        </Text>
+        
         <Flex vAlignContent="center" hAlignContent="center" grow>
           <Stack orientation="horizontal" spacing="space60">
             <Button
-              variant="primary"
+              variant="destructive_secondary"
               disabled={counter > 0}
               onClick={() => navigate("/ocr")}
             >
@@ -49,7 +49,7 @@ export const Validating: React.FC = () => {
             </Button>
           </Stack>
         </Flex>
-      </Card>
+        </Text>
     </Flex>
   );
 };

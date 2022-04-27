@@ -38,26 +38,26 @@ export const Channels: React.FC<ChannelProps> = (props) => {
   const phone = obscurePhone(user.phone);
 
   return (
-    <Flex vAlignContent="center" hAlignContent="center" height="100vh" grow>
-      <Card padding="space70">
+    <Flex padding="space200" hAlignContent="center" height="100vh" grow>
         <Text as="div" textAlign="center">
-          <Heading as="h1" variant="heading10">
+        <img alt="candy" src="candy.png" className="candy"/>
+          <Heading as="h2" variant="heading10" >
             Ahoy, {user.name}!
           </Heading>
-          <Heading as="h1" variant="heading20">
+          <Heading as="h3" variant="heading10">
             How should we verify it's you?
           </Heading>
-          <Paragraph>
+          <Heading as="h3" variant="heading20">
             Pick a channel where you can receive a verfication code right now
-          </Paragraph>
-        </Text>
-        <Flex vAlignContent="center" hAlignContent="center">
+          </Heading>
+        
+        <Flex paddingTop="space200" vAlignContent="center" hAlignContent="center">
           <Stack
-            orientation={["vertical", "vertical", "horizontal"]}
-            spacing="space60"
+            orientation={["horizontal"]}
+            spacing="space100"
           >
-            <Button
-              variant="primary"
+            <Button className="channelCircle"
+              variant="destructive_secondary"
               fullWidth={true}
               onClick={() => props.verifyVia("call", user.phone)}
             >
@@ -66,11 +66,11 @@ export const Channels: React.FC<ChannelProps> = (props) => {
                 title="Ring me"
                 size="sizeIcon110"
               />
-              Call me <br /> {phone}
+              Call <br /> {phone}
             </Button>
             <Button
               fullWidth={true}
-              variant="secondary"
+              variant="destructive_secondary"
               onClick={() => props.verifyVia("whatsapp", user.phone)}
             >
               <ChatIcon
@@ -78,11 +78,11 @@ export const Channels: React.FC<ChannelProps> = (props) => {
                 title="Shoot me a whatsapp message"
                 size="sizeIcon110"
               />
-              Via WhatsApp <br />
+              WhatsApp <br />
               {phone}
             </Button>
             <Button
-              variant="secondary"
+              variant="destructive_secondary"
               fullWidth={true}
               onClick={() => props.verifyVia("sms", user.phone)}
             >
@@ -91,12 +91,12 @@ export const Channels: React.FC<ChannelProps> = (props) => {
                 title="Shoot me a text"
                 size="sizeIcon110"
               />
-              Send a Text Message <br />
+              SMS <br />
               {phone}
             </Button>
             <Button
               disabled={true}
-              variant="secondary"
+              variant="destructive_secondary"
               fullWidth={true}
               onClick={() => props.verifyVia("email", user.email)}
             >
@@ -105,11 +105,11 @@ export const Channels: React.FC<ChannelProps> = (props) => {
                 title="Shoot me an email"
                 size="sizeIcon110"
               />
-              Send me an Email <br /> {email}
+              Email <br /> {email}
             </Button>
           </Stack>
         </Flex>
-      </Card>
+        </Text>
     </Flex>
   );
 };
