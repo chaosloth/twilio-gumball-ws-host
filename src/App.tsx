@@ -12,8 +12,8 @@ import { Validating } from "./pages/Validating";
 import { Incorrect } from "./pages/Incorrect";
 import { Dispense } from "./pages/Dispense";
 import { Error } from "./pages/Error";
-
 import { Button } from "@twilio-paste/core/button";
+import { Flex, Stack, Text } from "@twilio-paste/core";
 
 import UserContext from "./UserContext";
 
@@ -139,11 +139,30 @@ const App: React.FC = ({ children }) => {
           <Route path="/dispense" element={<Dispense />} />
           <Route path="/error" element={<Error />} />
         </Routes>
-        {gameTimeout <= 0 && (
-          <Button variant="secondary" onClick={handleManualReset}>
-            Reset Game
-          </Button>
-        )}
+        <div
+          style={{
+            backgroundColor: "#F22F46",
+            position: "absolute",
+            bottom: "0px",
+            width: "100vw",
+            padding: "5px",
+            textAlign: "center",
+          }}
+        >
+          <Flex hAlignContent="center" vAlignContent="center">
+            <Stack orientation="horizontal" spacing="space60">
+              <Text style={{ fontSize: 20, color: "white" }} as="p">
+                Powered by Twilio Verify
+              </Text>
+              <img style={{ width: 30 }} alt="twilio-logo" src="twilio.png" />
+              {gameTimeout <= 0 && (
+                <Button variant="secondary" onClick={handleManualReset}>
+                  Reset Game
+                </Button>
+              )}
+            </Stack>
+          </Flex>
+        </div>
       </React.Suspense>
     </UserContext.Provider>
   );

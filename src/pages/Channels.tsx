@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Card } from "@twilio-paste/core/card";
+
 import { Button } from "@twilio-paste/core/button";
 import { Heading } from "@twilio-paste/core/heading";
 import { Text } from "@twilio-paste/core/text";
-import { Flex, Paragraph, Stack } from "@twilio-paste/core";
+import { Flex, Box, Stack } from "@twilio-paste/core";
 
 import { ProductMessagingIcon } from "@twilio-paste/icons/esm/ProductMessagingIcon";
 import { SendIcon } from "@twilio-paste/icons/esm/SendIcon";
@@ -39,77 +39,76 @@ export const Channels: React.FC<ChannelProps> = (props) => {
 
   return (
     <Flex padding="space200" hAlignContent="center" height="100vh" grow>
-        <Text as="div" textAlign="center">
-        <img alt="candy" src="candy.png" className="candy"/>
-          <Heading as="h2" variant="heading10" >
-            Ahoy, {user.name}!
-          </Heading>
-          <Heading as="h3" variant="heading10">
-            How should we verify it's you?
-          </Heading>
+      <Text as="div" textAlign="center">
+        <img alt="candy" src="candy.png" className="candy" />
+        <Heading as="h2" variant="heading10">
+          Ahoy, {user.name}!
+        </Heading>
+        <Heading as="h3" variant="heading10">
+          How should we verify it's you?
+        </Heading>
+
+        <Box className="channelSelector" padding="space60">
           <Heading as="h3" variant="heading20">
             Pick a channel where you can receive a verfication code right now
           </Heading>
-        
-        <Flex paddingTop="space200" vAlignContent="center" hAlignContent="center">
-          <Stack
-            orientation={["horizontal"]}
-            spacing="space100"
-          >
-            <Button className="channelCircle"
-              variant="destructive_secondary"
-              fullWidth={true}
-              onClick={() => props.verifyVia("call", user.phone)}
-            >
-              <VoiceCapableIcon
-                decorative={false}
-                title="Ring me"
-                size="sizeIcon110"
-              />
-              Call <br /> {phone}
-            </Button>
-            <Button
-              fullWidth={true}
-              variant="destructive_secondary"
-              onClick={() => props.verifyVia("whatsapp", user.phone)}
-            >
-              <ChatIcon
-                decorative={false}
-                title="Shoot me a whatsapp message"
-                size="sizeIcon110"
-              />
-              WhatsApp <br />
-              {phone}
-            </Button>
-            <Button
-              variant="destructive_secondary"
-              fullWidth={true}
-              onClick={() => props.verifyVia("sms", user.phone)}
-            >
-              <ProductMessagingIcon
-                decorative={false}
-                title="Shoot me a text"
-                size="sizeIcon110"
-              />
-              SMS <br />
-              {phone}
-            </Button>
-            <Button
-              disabled={true}
-              variant="destructive_secondary"
-              fullWidth={true}
-              onClick={() => props.verifyVia("email", user.email)}
-            >
-              <SendIcon
-                decorative={false}
-                title="Shoot me an email"
-                size="sizeIcon110"
-              />
-              Email <br /> {email}
-            </Button>
-          </Stack>
-        </Flex>
-        </Text>
+          <Flex vAlignContent="center" hAlignContent="center">
+            <Stack orientation={["horizontal"]} spacing="space100">
+              <Button
+                variant="destructive_secondary"
+                fullWidth={true}
+                onClick={() => props.verifyVia("call", user.phone)}
+              >
+                <VoiceCapableIcon
+                  decorative={false}
+                  title="Ring me"
+                  size="sizeIcon110"
+                />
+                Call <br /> {phone}
+              </Button>
+              <Button
+                fullWidth={true}
+                variant="destructive_secondary"
+                onClick={() => props.verifyVia("whatsapp", user.phone)}
+              >
+                <ChatIcon
+                  decorative={false}
+                  title="Shoot me a whatsapp message"
+                  size="sizeIcon110"
+                />
+                WhatsApp <br />
+                {phone}
+              </Button>
+              <Button
+                variant="destructive_secondary"
+                fullWidth={true}
+                onClick={() => props.verifyVia("sms", user.phone)}
+              >
+                <ProductMessagingIcon
+                  decorative={false}
+                  title="Shoot me a text"
+                  size="sizeIcon110"
+                />
+                SMS <br />
+                {phone}
+              </Button>
+              <Button
+                disabled={true}
+                variant="destructive_secondary"
+                fullWidth={true}
+                onClick={() => props.verifyVia("email", user.email)}
+              >
+                <SendIcon
+                  decorative={false}
+                  title="Shoot me an email"
+                  size="sizeIcon110"
+                />
+                Email <br /> {email}
+              </Button>
+            </Stack>
+          </Flex>
+        </Box>
+      </Text>
     </Flex>
   );
 };

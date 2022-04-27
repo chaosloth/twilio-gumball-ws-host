@@ -121,7 +121,7 @@ const sendUserVerificationToken = function (message) {
     return;
   }
   client.verify
-    .services(process.env.VERIFICATION_SERVICE_SID)
+    .services(process.env.TWILIO_VERIFICATION_SERVICE_SID)
     .verifications.create({ to: message.address, channel: message.method })
     .then((verification) => {
       console.log(
@@ -145,7 +145,7 @@ const performUserVerification = function (message) {
   }
 
   client.verify
-    .services(process.env.VERIFICATION_SERVICE_SID)
+    .services(process.env.TWILIO_VERIFICATION_SERVICE_SID)
     .verificationChecks.create({ to: message.address, code: message.token })
     .then((verification_check) => {
       console.log("Attempting to verify user, check:", verification_check);

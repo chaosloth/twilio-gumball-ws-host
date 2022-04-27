@@ -1,8 +1,7 @@
 import * as React from "react";
-import { Card } from "@twilio-paste/core/card";
 import { Button } from "@twilio-paste/core/button";
 import { Text } from "@twilio-paste/core/text";
-import { Flex, Stack, Alert } from "@twilio-paste/core";
+import { Flex, Stack } from "@twilio-paste/core";
 import { useTheme } from "@twilio-paste/theme";
 import { default as Handwriting } from "../HandwritingCanvas.js";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +22,7 @@ export const OCR: React.FC<OCRProps> = (props) => {
 
   // Set display size (vw/vh).
   const canvasWidth = (80 * window.innerWidth) / 100;
-  const canvasHeight = (30 * window.innerHeight) / 100 || 766;
+  const canvasHeight = (50 * window.innerHeight) / 100 || 766;
 
   const handleDoneClick = () => {
     if (!haveCode) {
@@ -44,7 +43,7 @@ export const OCR: React.FC<OCRProps> = (props) => {
   const canvasStyle = {
     cursor: "crosshair",
     backgroundColor: theme.backgroundColors.colorBackgroundInverse,
-    borderRadius: "3%"
+    borderRadius: "20px",
   };
 
   React.useEffect(() => {
@@ -78,11 +77,11 @@ export const OCR: React.FC<OCRProps> = (props) => {
     <>
       <Flex padding="space200" hAlignContent="center" height="100vh" grow>
         <Stack orientation="vertical" spacing="space60">
-        <img alt="candy" src="candy.png" className="candy"/>
-            <Heading as="h3" variant="heading30">
-                Using your finger, write the verification code you just received
-            </Heading>
-          <Flex vAlignContent="center" hAlignContent="center" >
+          <img alt="candy" src="candy.png" className="candy" />
+          <Heading as="h3" variant="heading30">
+            Using your finger, write the verification code you just received
+          </Heading>
+          <Flex vAlignContent="center" hAlignContent="center">
             <div className="card">
               <Stack orientation="vertical" spacing="space60">
                 <canvas
@@ -93,10 +92,9 @@ export const OCR: React.FC<OCRProps> = (props) => {
                 ></canvas>
 
                 <Stack
-                  orientation={["vertical",  "horizontal"]}
+                  orientation={["vertical", "horizontal"]}
                   spacing="space80"
                 >
-                  
                   <Button
                     variant="primary"
                     fullWidth={true}

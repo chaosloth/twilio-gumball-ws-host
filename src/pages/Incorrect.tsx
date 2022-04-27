@@ -1,5 +1,4 @@
 import React from "react";
-import { Card } from "@twilio-paste/core/card";
 import { Heading } from "@twilio-paste/core/heading";
 import { Text } from "@twilio-paste/core/text";
 import { Flex, Paragraph, Stack } from "@twilio-paste/core";
@@ -17,22 +16,22 @@ export const Incorrect: React.FC = () => {
 
   return (
     <Flex padding="space200" hAlignContent="center" height="100vh" grow>
-        <Text as="div" textAlign="center">
-        <img alt="candy" src="candy.png" className="candy"/>
-          <Heading as="h2" variant="heading10">
-            Hmmm...That's not right
-          </Heading>
+      <Text as="div" textAlign="center">
+        <img alt="candy" src="candy.png" className="candy" />
+        <Heading as="h2" variant="heading10">
+          Hmmm...That's not right
+        </Heading>
 
-          <Flex hAlignContent="center" vertical>
-            <Paragraph>
-              <Spinner
-                size="sizeIcon110"
-                color="colorTextSuccess"
-                decorative={false}
-                title="Loading"
-              />
-            </Paragraph>
-          </Flex>
+        <Flex hAlignContent="center" vertical>
+          <Paragraph>
+            <Spinner
+              size="sizeIcon110"
+              color="colorTextSuccess"
+              decorative={false}
+              title="Loading"
+            />
+          </Paragraph>
+        </Flex>
 
         <Flex vAlignContent="center" hAlignContent="center" grow>
           <Stack
@@ -58,7 +57,7 @@ export const Incorrect: React.FC = () => {
             </Button>
           </Stack>
         </Flex>
-        </Text>
+      </Text>
     </Flex>
   );
 };

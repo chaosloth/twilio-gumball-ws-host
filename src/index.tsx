@@ -3,7 +3,6 @@ import * as ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { Theme } from "@twilio-paste/core/theme";
 import { CustomizationProvider } from "@twilio-paste/core/customization";
 
 export const Index: React.FC = (props) => {
@@ -21,16 +20,12 @@ export const Index: React.FC = (props) => {
   };
 
   return (
-    <div className="funkyBg" style={pageStyle}>
+    <div className="backgroundImage" style={pageStyle}>
       <style>
-      @import url('http://fonts.cdnfonts.com/css/willy-wonka');
-      @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+        @import url('http://fonts.cdnfonts.com/css/willy-wonka'); @import
+        url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
       </style>
-      <img className="logo" alt="logo" src="twilio.png"/>
-      <img className="borderImage" alt="Candy-border" src="candy-border.png"/>
-      <div className="footer">
-         <p className="footerText">Powered by Twilio Verify <img className="footerLogo" alt="twilio-logo" src="twilio.png"/></p>
-      </div>
+      <img className="logo" alt="logo" src="twilio.png" />
       <BrowserRouter>
         <CustomizationProvider baseTheme="default" theme={customStyle}>
           <App></App>
