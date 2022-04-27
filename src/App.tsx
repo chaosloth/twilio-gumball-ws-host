@@ -120,40 +120,32 @@ const App: React.FC = ({ children }) => {
     sendMessage(JSON.stringify(request));
   };
 
-  const pageStyle = {
-    background: "#FFF5FD",
-    width: "100vw",
-    height: "100vh",
-  };
-
   return (
-    <div style={pageStyle}>
-      <UserContext.Provider value={{ name, phone, email }}>
-        <React.Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="" element={<IndexPage />} />
-            <Route
-              path="/channels"
-              element={<Channels verifyVia={sendVerification} />}
-            />
-            <Route path="/sending" element={<Sending />} />
-            <Route
-              path="/ocr"
-              element={<OCR onVerification={doVerification} />}
-            />
-            <Route path="/validating" element={<Validating />} />
-            <Route path="/incorrect" element={<Incorrect />} />
-            <Route path="/dispense" element={<Dispense />} />
-            <Route path="/error" element={<Error />} />
-          </Routes>
-          {gameTimeout <= 0 && (
-            <Button variant="secondary" onClick={handleManualReset}>
-              Reset Game
-            </Button>
-          )}
-        </React.Suspense>
-      </UserContext.Provider>
-    </div>
+    <UserContext.Provider value={{ name, phone, email }}>
+      <React.Suspense fallback={<Loading />}>
+        <Routes>
+          <Route path="" element={<IndexPage />} />
+          <Route
+            path="/channels"
+            element={<Channels verifyVia={sendVerification} />}
+          />
+          <Route path="/sending" element={<Sending />} />
+          <Route
+            path="/ocr"
+            element={<OCR onVerification={doVerification} />}
+          />
+          <Route path="/validating" element={<Validating />} />
+          <Route path="/incorrect" element={<Incorrect />} />
+          <Route path="/dispense" element={<Dispense />} />
+          <Route path="/error" element={<Error />} />
+        </Routes>
+        {gameTimeout <= 0 && (
+          <Button variant="secondary" onClick={handleManualReset}>
+            Reset Game
+          </Button>
+        )}
+      </React.Suspense>
+    </UserContext.Provider>
   );
 };
 

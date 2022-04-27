@@ -11,7 +11,7 @@ export const Dispense: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const [counter, setCounter] = React.useState(6);
+  const [counter, setCounter] = React.useState(30);
   React.useEffect(() => {
     counter > 0 &&
       setTimeout(() => {

@@ -27,3 +27,8 @@ body,
       transform: scaleX(1);
     }
   }
+
+
+.funkyBg {
+  background-color: blueviolet;
+}
