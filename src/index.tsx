@@ -22,7 +22,7 @@ export const Index: React.FC = (props) => {
   return (
     <div className="backgroundImage" style={pageStyle}>
       <style>
-        @import url('http://fonts.cdnfonts.com/css/willy-wonka'); @import
+        @import url('https://fonts.cdnfonts.com/css/willy-wonka'); @import
         url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
       </style>
       <img className="logo" alt="logo" src="twilio.png" />
