@@ -11,7 +11,7 @@ export const IndexPage: React.FC = () => {
   return (
     <Flex paddingTop="space200" hAlignContent="center" height="100vh" grow>
       <Text as="div" textAlign="center">
-        <h2 className="text_shadows">Scan your badge to start</h2>
+        <h2 className="text_shadows">Check in at booth to start!</h2>
 
         <Flex hAlignContent="center" vertical>
           <img alt="Candy" width="250px" style={styles} src="candy.png" />
