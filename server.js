@@ -11,6 +11,7 @@ console.log("*** AUTH", config);
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = Twilio(accountSid, authToken);
+const dispense_duration = process.env.DISPENSE_DURATION;
 
 const app = express();
 let userDb = [];
@@ -49,10 +50,13 @@ wss.on("connection", (ws, req) => {
   let remoteAdd =
     req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
+  ws.isAlive = true;
+
   console.log("WS Client connected: ", remoteAdd);
   ws.send(JSON.stringify({ action: "none", reason: "New client connected" }));
 
   ws.on("close", function close(code, reason) {
+    ws.isAlive = false;
     console.log(
       "WS Client disconnected " +
         remoteAdd +
@@ -64,12 +68,16 @@ wss.on("connection", (ws, req) => {
   });
 
   ws.on("message", (data, isBinary) => {
+    ws.isAlive = true;
     try {
       const message = isBinary ? data : data.toString();
       console.log("WS Message: ", message);
       const json = JSON.parse(message);
 
       switch (json.action) {
+        case "pong":
+          ws.isAlive = true;
+          break;
         case "generate":
           sendUserVerificationToken(json);
           break;
@@ -85,6 +93,21 @@ wss.on("connection", (ws, req) => {
     }
   });
 });
+
+const interval = setInterval(function ping() {
+  wss.clients.forEach(function each(ws) {
+    if (ws.isAlive === false) return ws.terminate();
+    ws.isAlive = false;
+    ws.send(JSON.stringify({ action: "ping" }));
+  });
+}, 30000);
+
+// setInterval(() => {
+//   wss.clients.forEach((client) => {
+//     let payload = { action: "time", currentTime: new Date().toTimeString() };
+//     client.send(JSON.stringify(payload));
+//   });
+// }, 2000);
 
 const notifyClients = function (payload) {
   wss.clients.forEach((client) => {
@@ -128,7 +151,7 @@ const performUserVerification = function (message) {
       console.log("Attempting to verify user, check:", verification_check);
 
       if (verification_check?.status == "approved") {
-        notifyClients({ action: "dispense" });
+        notifyClients({ action: "dispense", duration: dispense_duration });
       } else {
         notifyClients({ action: "incorrect" });
       }
@@ -138,13 +161,6 @@ const performUserVerification = function (message) {
       notifyClients({ action: "incorrect", reason: err.toString() });
     });
 };
-
-// setInterval(() => {
-//   wss.clients.forEach((client) => {
-//     let payload = { action: "time", currentTime: new Date().toTimeString() };
-//     client.send(JSON.stringify(payload));
-//   });
-// }, 2000);
 
 server.on("upgrade", (request, socket, head) => {
   wss.handleUpgrade(request, socket, head, (socket) => {
@@ -218,6 +234,10 @@ app.post("/reset", (req, res) => {
 });
 
 app.post("/dispense", (req, res) => {
-  notifyClients({ action: "dispense" });
+  if (req.body.hasOwnProperty("duration")) {
+    notifyClients({ action: "dispense", duration: req.body.duration });
+  } else {
+    notifyClients({ action: "dispense", duration: dispense_duration });
+  }
   res.send({ status: "ok" });
 });

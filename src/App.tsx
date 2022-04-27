@@ -40,12 +40,17 @@ const App: React.FC = ({ children }) => {
     shouldReconnect: (closeEvent) => true,
     reconnectAttempts: 1000000,
     reconnectInterval: 3000,
-    onOpen: () => console.log("WS Opened"),
+    onOpen: () => {
+      console.log("WS Opened");
+    },
     onMessage: (message) => {
       try {
         console.log(message.data);
         const json = JSON.parse(message.data);
         switch (json.action) {
+          case "ping":
+            sendMessage(JSON.stringify({ action: "pong" }));
+            break;
           case "route":
             if (json?.route) {
               console.log("Navigating to: ", json.route);
