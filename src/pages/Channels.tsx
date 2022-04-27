@@ -53,59 +53,65 @@ export const Channels: React.FC<ChannelProps> = (props) => {
             Pick a channel where you can receive a verfication code right now
           </Heading>
           <Flex vAlignContent="center" hAlignContent="center">
-            <Stack orientation={["horizontal"]} spacing="space100">
-              <Button
-                variant="destructive_secondary"
-                fullWidth={true}
-                onClick={() => props.verifyVia("call", user.phone)}
+            <div style={{ width: "100%" }}>
+              <Stack
+                style={{ width: "100%" }}
+                orientation={["vertical", "vertical", "horizontal"]}
+                spacing="space80"
               >
-                <VoiceCapableIcon
-                  decorative={false}
-                  title="Ring me"
-                  size="sizeIcon110"
-                />
-                Call <br /> {phone}
-              </Button>
-              <Button
-                fullWidth={true}
-                variant="destructive_secondary"
-                onClick={() => props.verifyVia("whatsapp", user.phone)}
-              >
-                <ChatIcon
-                  decorative={false}
-                  title="Shoot me a whatsapp message"
-                  size="sizeIcon110"
-                />
-                WhatsApp <br />
-                {phone}
-              </Button>
-              <Button
-                variant="destructive_secondary"
-                fullWidth={true}
-                onClick={() => props.verifyVia("sms", user.phone)}
-              >
-                <ProductMessagingIcon
-                  decorative={false}
-                  title="Shoot me a text"
-                  size="sizeIcon110"
-                />
-                SMS <br />
-                {phone}
-              </Button>
-              <Button
-                disabled={true}
-                variant="destructive_secondary"
-                fullWidth={true}
-                onClick={() => props.verifyVia("email", user.email)}
-              >
-                <SendIcon
-                  decorative={false}
-                  title="Shoot me an email"
-                  size="sizeIcon110"
-                />
-                Email <br /> {email}
-              </Button>
-            </Stack>
+                <Button
+                  variant="destructive_secondary"
+                  fullWidth={true}
+                  onClick={() => props.verifyVia("call", user.phone)}
+                >
+                  <VoiceCapableIcon
+                    decorative={false}
+                    title="Ring me"
+                    size="sizeIcon110"
+                  />
+                  Call <br /> {phone}
+                </Button>
+                <Button
+                  fullWidth={true}
+                  variant="destructive_secondary"
+                  onClick={() => props.verifyVia("whatsapp", user.phone)}
+                >
+                  <ChatIcon
+                    decorative={false}
+                    title="Shoot me a whatsapp message"
+                    size="sizeIcon110"
+                  />
+                  WhatsApp <br />
+                  {phone}
+                </Button>
+                <Button
+                  variant="destructive_secondary"
+                  fullWidth={true}
+                  onClick={() => props.verifyVia("sms", user.phone)}
+                >
+                  <ProductMessagingIcon
+                    decorative={false}
+                    title="Shoot me a text"
+                    size="sizeIcon110"
+                  />
+                  SMS <br />
+                  {phone}
+                </Button>
+                <Button
+                  disabled={true}
+                  variant="destructive_secondary"
+                  fullWidth={true}
+                  onClick={() => props.verifyVia("email", user.email)}
+                >
+                  <SendIcon
+                    decorative={false}
+                    title="Shoot me an email"
+                    size="sizeIcon110"
+                  />
+                  Email <br /> {email}
+                </Button>
+              </Stack>
+            </div>
           </Flex>
         </Box>
       </Text>

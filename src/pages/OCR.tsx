@@ -92,7 +92,7 @@ export const OCR: React.FC<OCRProps> = (props) => {
                 ></canvas>
 
                 <Stack
-                  orientation={["vertical", "horizontal"]}
+                  orientation={["vertical", "vertical", "horizontal"]}
                   spacing="space80"
                 >
                   <Button

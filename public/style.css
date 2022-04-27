@@ -92,6 +92,14 @@ body,
   font-size: 8rem !important;
 }
 
+.wonka {
+  font-family: 'WillyWonka', sans-serif;
+  font-weight: lighter;
+  color: #FFE980;
+  font-size: 8rem !important;
+}
+
+
 h2 {
   font-weight: bold;
   font-size: 4rem !important;

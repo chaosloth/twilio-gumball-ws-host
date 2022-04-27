@@ -26,9 +26,9 @@ export const Dispense: React.FC = () => {
   return (
     <Flex padding="space200" hAlignContent="center" height="100vh" grow>
       <Text as="div" textAlign="center">
-        <Heading as="h2" variant="heading10">
-          It's really you!
-        </Heading>
+        <Heading as="h2" variant="heading10"></Heading>
+        <h2 className="text_shadows">It's really you!</h2>
+
         <Heading as="h3" variant="heading20">
           {user.name}, Thanks for participating in RED 2022.
           <br />

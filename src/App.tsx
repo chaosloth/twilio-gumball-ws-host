@@ -1,6 +1,6 @@
 import React from "react";
 import useWebSocket from "react-use-websocket";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 
 import { Loading } from "./components/Loading";
@@ -23,6 +23,7 @@ const App: React.FC = ({ children }) => {
 
   const [socketUrl] = React.useState(WS_HOST);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [name, setName] = React.useState<string>("unknown");
   const [phone, setPhone] = React.useState<string>("");
@@ -142,7 +143,7 @@ const App: React.FC = ({ children }) => {
         <div
           style={{
             backgroundColor: "#F22F46",
-            position: "absolute",
+            position: "fixed",
             bottom: "0px",
             width: "100vw",
             padding: "5px",
@@ -155,11 +156,11 @@ const App: React.FC = ({ children }) => {
                 Powered by Twilio Verify
               </Text>
               <img style={{ width: 30 }} alt="twilio-logo" src="twilio.png" />
-              {gameTimeout <= 0 && (
+              {location.pathname !== "/" && gameTimeout <= 0 && (
                 <Button variant="secondary" onClick={handleManualReset}>
                   Reset Game
                 </Button>
-              )}
+              )}{" "}
             </Stack>
           </Flex>
         </div>
