@@ -219,6 +219,17 @@ app.post("/trigger", (req, res) => {
   res.send({ status: "ok", id: messageId });
 });
 
+app.post("/start", (req, res) => {
+  if (!req.body?.name || !req.body?.phone || !req.body?.email) {
+    returnError(res, "Missing name, phone and/or email", req.body);
+    return;
+  }
+
+  notifyClients({ action: "start", user: req.body });
+  console.log("Starting game for user", req.body);
+  res.send({ status: "ok" });
+});
+
 app.post("/route", (req, res) => {
   const route = req.body.route;
   wss.clients.forEach((client) => {
