@@ -22,13 +22,6 @@ export const Channels: React.FC<ChannelProps> = (props) => {
   const isCallEnabled = !user.phone || user.phone === "" ? true : false;
   const isEmailEnabled = !user.email || user.email === "" ? true : false;
 
-  // const [isCallEnabled, setCallEnabled] = React.useState(
-  //   !user.phone || user.phone === "" ? true : false
-  // );
-  // const [isEmailEnabled, setEmailEnabled] = React.useState(
-  //   !user.email || user.email === "" ? true : false
-  // );
-
   const obscureEmail = (email: string) => {
     if (!email || email.length === 0) return "";
     const [name, domain] = email.split("@");
