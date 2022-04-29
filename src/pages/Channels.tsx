@@ -20,13 +20,13 @@ export const Channels: React.FC<ChannelProps> = (props) => {
   const user = React.useContext(UserContext);
 
   const obscureEmail = (email: string) => {
-    if (email.length === 0) return "";
+    if (email?.length === 0) return "";
     const [name, domain] = email.split("@");
     return `${name[0]}${new Array(name.length).join("*")}@${domain}`;
   };
 
   const obscurePhone = (phone: string) => {
-    if (phone.length === 0) return "";
+    if (phone?.length === 0) return "";
     const startDigits = phone.slice(0, 4);
     const endDigits = phone.slice(-3);
     return `${startDigits}${new Array(phone.length - (4 + 3)).join(
