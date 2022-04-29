@@ -196,6 +196,8 @@ app.post("/trigger", (req, res) => {
   const type = req.body.type;
   const userId = req.body.userId;
 
+  let status = "unhandled";
+
   switch (type) {
     case "identify":
       if (!req.body.hasOwnProperty("traits")) {
@@ -204,6 +206,7 @@ app.post("/trigger", (req, res) => {
       }
       userDb[req.body.userId] = req.body.traits;
       userDb[req.body.userId].userId = req.body.userId;
+      status = "ok";
       break;
 
     case "track":
@@ -217,14 +220,21 @@ app.post("/trigger", (req, res) => {
         return;
       }
 
-      if (!req.body?.properties?.booth?.id == process.env.BOOTH_ID) {
-        returnError(res, "Booth details missing or do not match", req.body);
-        return;
+      if (req.body?.event === "checked-in") {
+        if (!req.body?.properties?.booth?.id == process.env.BOOTH_ID) {
+          status = "ignored";
+          console.log("Booth details missing or do not match");
+        } else {
+          notifyClients({ action: "start", user: userDb[userId] });
+          console.log("Starting game for user", userDb[userId]);
+          status = "accepted";
+        }
+      } else {
+        status = "ignored";
+        console.log("Track event is not 'checked-in' type", req.body);
       }
-      notifyClients({ action: "start", user: userDb[userId] });
-      console.log("Starting game for user", userDb[userId]);
   }
-  res.send({ status: "ok", id: messageId });
+  res.send({ status: status, id: messageId });
 });
 
 app.post("/start", (req, res) => {
