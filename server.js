@@ -1,9 +1,7 @@
 import WebSocket, { WebSocketServer } from "ws";
-import fetch from "node-fetch";
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
-import tokenGenerator from "./token_generator.js";
 import config from "./config.js";
 import Twilio from "twilio";
 import Analytics from "analytics-node";
@@ -14,7 +12,6 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = Twilio(accountSid, authToken);
 const dispense_duration = process.env.DISPENSE_DURATION;
-
 const analytics = new Analytics(process.env.SEGMENT_WRITEKEY);
 
 const app = express();
@@ -24,16 +21,6 @@ let userDb = [];
 app.use(express.static("build"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-app.get("/token/:id?", (req, res) => {
-  const id = req.params.id;
-  res.send(tokenGenerator(id));
-});
-
-app.post("/token", (req, res) => {
-  const id = req.body.id;
-  res.send(tokenGenerator(id));
-});
 
 app.get("/ping", function (req, res) {
   return res.send("pong");
