@@ -19,14 +19,24 @@ interface ChannelProps {
 export const Channels: React.FC<ChannelProps> = (props) => {
   const user = React.useContext(UserContext);
 
+  const isCallEnabled = !user.phone || user.phone === "" ? true : false;
+  const isEmailEnabled = !user.email || user.email === "" ? true : false;
+
+  // const [isCallEnabled, setCallEnabled] = React.useState(
+  //   !user.phone || user.phone === "" ? true : false
+  // );
+  // const [isEmailEnabled, setEmailEnabled] = React.useState(
+  //   !user.email || user.email === "" ? true : false
+  // );
+
   const obscureEmail = (email: string) => {
-    if (email?.length === 0) return "";
+    if (!email || email.length === 0) return "";
     const [name, domain] = email.split("@");
     return `${name[0]}${new Array(name.length).join("*")}@${domain}`;
   };
 
   const obscurePhone = (phone: string) => {
-    if (phone?.length === 0) return "";
+    if (!phone || phone.length === 0) return "";
     const startDigits = phone.slice(0, 4);
     const endDigits = phone.slice(-3);
     return `${startDigits}${new Array(phone.length - (4 + 3)).join(
@@ -60,6 +70,7 @@ export const Channels: React.FC<ChannelProps> = (props) => {
                 spacing="space80"
               >
                 <Button
+                  disabled={isCallEnabled}
                   variant="destructive_secondary"
                   fullWidth={true}
                   onClick={() =>
@@ -74,6 +85,7 @@ export const Channels: React.FC<ChannelProps> = (props) => {
                   Call <br /> {phone}
                 </Button>
                 <Button
+                  disabled={isCallEnabled}
                   fullWidth={true}
                   variant="destructive_secondary"
                   onClick={() =>
@@ -89,6 +101,7 @@ export const Channels: React.FC<ChannelProps> = (props) => {
                   {phone}
                 </Button>
                 <Button
+                  disabled={isCallEnabled}
                   variant="destructive_secondary"
                   fullWidth={true}
                   onClick={() =>
@@ -104,7 +117,7 @@ export const Channels: React.FC<ChannelProps> = (props) => {
                   {phone}
                 </Button>
                 <Button
-                  disabled={true}
+                  disabled={isEmailEnabled}
                   variant="destructive_secondary"
                   fullWidth={true}
                   onClick={() =>
