@@ -19,8 +19,8 @@ import UserContext from "./UserContext";
 
 const App: React.FC = ({ children }) => {
   //Public API that will echo messages sent to it back to the client
-  //const WS_HOST = window.location.origin.replace(/^http/, "ws");
-  const WS_HOST = "ws://localhost:5001";
+  const WS_HOST = window.location.origin.replace(/^http/, "ws");
+  // const WS_HOST = "ws://localhost:5001";
 
   const [socketUrl] = React.useState(WS_HOST);
   const navigate = useNavigate();
