@@ -1,17 +1,21 @@
 import WebSocket, { WebSocketServer } from "ws";
+import fetch from "node-fetch";
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
 import tokenGenerator from "./token_generator.js";
 import config from "./config.js";
 import Twilio from "twilio";
+import Analytics from "analytics-node";
 
-console.log("*** AUTH", config);
+console.log("*** CONFIGURATION ", config);
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = Twilio(accountSid, authToken);
 const dispense_duration = process.env.DISPENSE_DURATION;
+
+const analytics = new Analytics(process.env.SEGMENT_WRITEKEY);
 
 const app = express();
 let userDb = [];
@@ -102,13 +106,6 @@ const interval = setInterval(function ping() {
   });
 }, 30000);
 
-// setInterval(() => {
-//   wss.clients.forEach((client) => {
-//     let payload = { action: "time", currentTime: new Date().toTimeString() };
-//     client.send(JSON.stringify(payload));
-//   });
-// }, 2000);
-
 const notifyClients = function (payload) {
   wss.clients.forEach((client) => {
     client.send(JSON.stringify(payload));
@@ -116,8 +113,11 @@ const notifyClients = function (payload) {
 };
 
 const sendUserVerificationToken = function (message) {
-  if (!message.method || !message.address) {
-    notifyClients({ action: "error", reason: "Missing method or address" });
+  if (!message.method || !message.address || !message.userId) {
+    notifyClients({
+      action: "error",
+      reason: "Missing userId, method or address",
+    });
     return;
   }
   client.verify
@@ -137,8 +137,8 @@ const sendUserVerificationToken = function (message) {
 };
 
 const performUserVerification = function (message) {
-  if (!message.token || !message.address) {
-    let reason = "Missing verfication token or address";
+  if (!message.token || !message.address || !message.userId) {
+    let reason = "Missing verfication userId, token or address";
     console.error(reason);
     notifyClients({ action: "error", reason: r });
     return;
@@ -152,14 +152,34 @@ const performUserVerification = function (message) {
 
       if (verification_check?.status == "approved") {
         notifyClients({ action: "dispense", duration: dispense_duration });
+        track(message.userId, "Verified Correctly");
       } else {
         notifyClients({ action: "incorrect" });
+        segmentAnalytics("booth-game", {
+          userId: message.userId,
+          score: 0,
+          stats: { verified: false, channel: message.method },
+        });
+
+        track(message.userId, "User not verified");
       }
     })
     .catch(function (err) {
-      console.error("Error in Twilio verify", err);
+      console.error("Error verifying", err);
       notifyClients({ action: "incorrect", reason: err.toString() });
+      track(message.userId, "User not verified");
     });
+};
+
+const track = function (userId, message) {
+  analytics.track({
+    userId: userId,
+    event: "booth-game",
+    properties: {
+      boothId: parseInt(process.env.BOOTH_ID),
+      data: message,
+    },
+  });
 };
 
 server.on("upgrade", (request, socket, head) => {
@@ -196,6 +216,7 @@ app.post("/trigger", (req, res) => {
         return;
       }
       userDb[req.body.userId] = req.body.traits;
+      userDb[req.body.userId].userId = req.body.userId;
       break;
 
     case "track":
@@ -220,8 +241,13 @@ app.post("/trigger", (req, res) => {
 });
 
 app.post("/start", (req, res) => {
-  if (!req.body?.name || !req.body?.phone || !req.body?.email) {
-    returnError(res, "Missing name, phone and/or email", req.body);
+  if (
+    !req.body?.name ||
+    !req.body?.phone ||
+    !req.body?.email ||
+    !req.body?.userId
+  ) {
+    returnError(res, "Missing userId, name, phone and/or email", req.body);
     return;
   }
 

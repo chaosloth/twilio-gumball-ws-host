@@ -4,12 +4,14 @@ export type UserInfo = {
   name: string;
   phone: string;
   email: string;
+  userId: string;
 };
 
 const UserContext = React.createContext<UserInfo>({
   name: "unknown",
   phone: "",
   email: "",
+  userId: "",
 });
 
 export const UserProvider = UserContext.Provider;

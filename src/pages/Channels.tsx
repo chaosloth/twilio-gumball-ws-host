@@ -13,7 +13,7 @@ import { ChatIcon } from "@twilio-paste/icons/esm/ChatIcon";
 import UserContext from "../UserContext";
 
 interface ChannelProps {
-  verifyVia: (channelType: string, address: string) => void;
+  verifyVia: (channelType: string, address: string, userId: string) => void;
 }
 
 export const Channels: React.FC<ChannelProps> = (props) => {
@@ -62,7 +62,9 @@ export const Channels: React.FC<ChannelProps> = (props) => {
                 <Button
                   variant="destructive_secondary"
                   fullWidth={true}
-                  onClick={() => props.verifyVia("call", user.phone)}
+                  onClick={() =>
+                    props.verifyVia("call", user.phone, user.userId)
+                  }
                 >
                   <VoiceCapableIcon
                     decorative={false}
@@ -74,7 +76,9 @@ export const Channels: React.FC<ChannelProps> = (props) => {
                 <Button
                   fullWidth={true}
                   variant="destructive_secondary"
-                  onClick={() => props.verifyVia("whatsapp", user.phone)}
+                  onClick={() =>
+                    props.verifyVia("whatsapp", user.phone, user.userId)
+                  }
                 >
                   <ChatIcon
                     decorative={false}
@@ -87,7 +91,9 @@ export const Channels: React.FC<ChannelProps> = (props) => {
                 <Button
                   variant="destructive_secondary"
                   fullWidth={true}
-                  onClick={() => props.verifyVia("sms", user.phone)}
+                  onClick={() =>
+                    props.verifyVia("sms", user.phone, user.userId)
+                  }
                 >
                   <ProductMessagingIcon
                     decorative={false}
@@ -101,7 +107,9 @@ export const Channels: React.FC<ChannelProps> = (props) => {
                   disabled={true}
                   variant="destructive_secondary"
                   fullWidth={true}
-                  onClick={() => props.verifyVia("email", user.email)}
+                  onClick={() =>
+                    props.verifyVia("email", user.email, user.userId)
+                  }
                 >
                   <SendIcon
                     decorative={false}

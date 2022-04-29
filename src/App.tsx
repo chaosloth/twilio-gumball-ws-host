@@ -25,10 +25,12 @@ const App: React.FC = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [userId, setUserId] = React.useState<string>("");
   const [name, setName] = React.useState<string>("unknown");
   const [phone, setPhone] = React.useState<string>("");
   const [email, setEmail] = React.useState<string>("");
   const [lastAddress, setLastAddress] = React.useState<string>("");
+  const [lastMethod, setLastMethod] = React.useState<string>("");
 
   const DEFAULT_TIMEOUT = 30;
   const [gameTimeout, setGameTimeoutCounter] = React.useState(DEFAULT_TIMEOUT);
@@ -59,6 +61,7 @@ const App: React.FC = ({ children }) => {
             }
             break;
           case "start":
+            setUserId(json.user.userId);
             setName(json.user.name);
             setPhone(json.user.phone);
             setEmail(json.user.email);
@@ -104,7 +107,9 @@ const App: React.FC = ({ children }) => {
       action: "generate",
       method: method,
       address: address,
+      userId: userId,
     };
+    setLastMethod(method);
     setLastAddress(address);
     navigate("/sending");
     sendMessage(JSON.stringify(request));
@@ -116,13 +121,15 @@ const App: React.FC = ({ children }) => {
       action: "verify",
       token: token,
       address: lastAddress,
+      method: lastMethod,
+      userId: userId,
     };
     navigate("/validating");
     sendMessage(JSON.stringify(request));
   };
 
   return (
-    <UserContext.Provider value={{ name, phone, email }}>
+    <UserContext.Provider value={{ name, phone, email, userId }}>
       <React.Suspense fallback={<Loading />}>
         <Routes>
           <Route path="" element={<IndexPage />} />
