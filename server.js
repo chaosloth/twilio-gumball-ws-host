@@ -221,7 +221,9 @@ app.post("/trigger", (req, res) => {
       }
 
       if (req.body?.event === "checked-in") {
-        if (!req.body?.properties?.booth?.id == process.env.BOOTH_ID) {
+        if (
+          req.body?.properties?.booth?.id !== parseInt(process.env.BOOTH_ID)
+        ) {
           status = "ignored";
           console.log("Booth details missing or do not match");
         } else {
