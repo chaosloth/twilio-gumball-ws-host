@@ -139,22 +139,16 @@ const performUserVerification = function (message) {
 
       if (verification_check?.status == "approved") {
         notifyClients({ action: "dispense", duration: dispense_duration });
-        track(message.userId, "Verified Correctly");
+        track(message.userId, "Verified Correctly via " + message.method);
       } else {
         notifyClients({ action: "incorrect" });
-        segmentAnalytics("booth-game", {
-          userId: message.userId,
-          score: 0,
-          stats: { verified: false, channel: message.method },
-        });
-
-        track(message.userId, "User not verified");
+        track(message.userId, "User not verified via " + message.method);
       }
     })
     .catch(function (err) {
       console.error("Error verifying", err);
       notifyClients({ action: "incorrect", reason: err.toString() });
-      track(message.userId, "User not verified");
+      track(message.userId, "User not verified via " + message.method);
     });
 };
 
