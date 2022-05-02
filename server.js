@@ -158,6 +158,7 @@ const track = function (userId, message) {
     event: "booth-game",
     properties: {
       boothId: parseInt(process.env.BOOTH_ID),
+      boothName: process.env.BOOTH_NAME,
       data: message,
     },
   });
@@ -174,7 +175,7 @@ const returnError = function (res, reason, xtra = null) {
   res.send({ status: "error", msg: reason });
 };
 
-app.post("/trigger", (req, res) => {
+app.post("/triggerSegment", (req, res) => {
   // Check we have the min messages parameters
   if (
     !req.body ||
@@ -231,6 +232,28 @@ app.post("/trigger", (req, res) => {
       }
   }
   res.send({ status: status, id: messageId });
+});
+
+app.post("/trigger", (req, res) => {
+  if (
+    !req.body?.customer?.name ||
+    !req.body?.customer?.phoneNumber ||
+    !req.body?.customer?.email ||
+    !req.body?.customer?.id
+  ) {
+    returnError(res, "Missing id, name, phone and/or email", req.body);
+    return;
+  }
+
+  let user = {
+    ...req.body.customer,
+  };
+
+  user.phone = user.phoneNumber;
+
+  notifyClients({ action: "start", user: user });
+  console.log("Starting game for user", user);
+  res.send({ status: "ok" });
 });
 
 app.post("/start", (req, res) => {

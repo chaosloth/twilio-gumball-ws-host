@@ -11,5 +11,6 @@ export default {
   SEGMENT_API_BASE_URL: process.env.SEGMENT_API_BASE_URL,
   SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
   BOOTH_ID: process.env.BOOTH_ID,
+  BOOTH_NAME: process.env.BOOTH_NAME,
   DISPENSE_DURATION: process.env.DISPENSE_DURATION,
 };
