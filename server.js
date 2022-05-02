@@ -234,19 +234,33 @@ app.post("/triggerSegment", (req, res) => {
   res.send({ status: status, id: messageId });
 });
 
-app.post("/trigger", (req, res) => {
+app.post("/trigger", bodyParser.text({ type: "*/*" }), (req, res) => {
+  let contype = req.headers["content-type"];
+  let payload = {};
+
+  if (!contype || contype.indexOf("application/json") !== 0) {
+    // Attempt to parse body as JSON
+    if (contype.indexOf("text/plain") !== 0) {
+      return res.send(400);
+    } else {
+      payload = JSON.parse(req.body);
+    }
+  } else {
+    payload = req.body;
+  }
+
   if (
-    !req.body?.customer?.name ||
-    !req.body?.customer?.phoneNumber ||
-    !req.body?.customer?.email ||
-    !req.body?.customer?.id
+    !payload.customer?.name ||
+    !payload.customer?.phoneNumber ||
+    !payload.customer?.email ||
+    !payload.customer?.id
   ) {
-    returnError(res, "Missing id, name, phone and/or email", req.body);
+    returnError(res, "Missing id, name, phone and/or email", payload);
     return;
   }
 
   let user = {
-    ...req.body.customer,
+    ...payload.customer,
   };
 
   user.phone = user.phoneNumber;
