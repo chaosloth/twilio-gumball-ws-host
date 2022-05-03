@@ -264,6 +264,7 @@ app.post("/trigger", bodyParser.text({ type: "*/*" }), (req, res) => {
   };
 
   user.phone = user.phoneNumber;
+  user.userId = user.id;
 
   notifyClients({ action: "start", user: user });
   console.log("Starting game for user", user);
