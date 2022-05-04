@@ -5,6 +5,7 @@ import path from "path";
 import config from "./config.js";
 import Twilio from "twilio";
 import Analytics from "analytics-node";
+import cors from "cors";
 
 console.log("*** CONFIGURATION ", config);
 
@@ -21,6 +22,7 @@ let userDb = [];
 app.use(express.static("build"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get("/ping", function (req, res) {
   return res.send("pong");
