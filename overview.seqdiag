@@ -1,11 +1,13 @@
-AE->Phone: Scan QR
+
 Phone->Segment: Get user details
 Segment->App Server: Event (Identify)
-App Server->Tablet: WS Offer options
+Segment->App Server: Event (Track)
+App Server->Tablet: WS Offer channel options
 Tablet->App Server: WS Chosen channel
-App Server->Twilio: WS Generate verification (Phone, Method)
-Twilio->User: Token
+App Server->Twilio: WS Generate verification (Address, Method)
+Twilio->User: Message (Token)
 App Server->Tablet: WS Prompt for input
 Tablet->Google:Transcribe text
 Tablet->App Server: WS Validate (Token)
-App Server->ESP: WS Dispense (Duration)
+App Server->Gumball Machine: WS Dispense (Duration)
+App Server->Segment: Event (Track) Outcome
