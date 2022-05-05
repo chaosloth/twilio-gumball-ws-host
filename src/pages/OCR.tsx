@@ -121,7 +121,7 @@ export const OCR: React.FC<OCRProps> = (props) => {
                     {counter > 0 && " in " + counter}
                   </Button>
                   {haveCode && (
-                    <Text as="span">
+                    <Text as="span" style={{ color: "white" }}>
                       I think you wrote <strong> {ocrResult}</strong>
                     </Text>
                   )}
