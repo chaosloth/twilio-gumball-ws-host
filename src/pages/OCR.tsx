@@ -21,8 +21,8 @@ export const OCR: React.FC<OCRProps> = (props) => {
   const [haveCode, setHaveCode] = React.useState(false);
 
   // Set display size (vw/vh).
-  const canvasWidth = (80 * window.innerWidth) / 100;
-  const canvasHeight = (50 * window.innerHeight) / 100 || 766;
+  const canvasWidth = (90 * window.innerWidth) / 100;
+  const canvasHeight = (40 * window.innerHeight) / 100 || 766;
 
   const handleDoneClick = () => {
     if (!haveCode) {
@@ -75,7 +75,7 @@ export const OCR: React.FC<OCRProps> = (props) => {
 
   return (
     <>
-      <Flex padding="space200" hAlignContent="center" height="100vh" grow>
+      <Flex padding="space80" hAlignContent="center" height="100vh" grow>
         <Stack orientation="vertical" spacing="space60">
           <img alt="candy" src="candy.png" className="candy" />
           <Heading as="h3" variant="heading30">

@@ -20,7 +20,7 @@ import UserContext from "./UserContext";
 const App: React.FC = ({ children }) => {
   //Public API that will echo messages sent to it back to the client
   const WS_HOST = window.location.origin.replace(/^http/, "ws");
-  // const WS_HOST = "ws://localhost:5001";
+  // const WS_HOST = "ws://192.168.1.215:5001";
 
   const [socketUrl] = React.useState(WS_HOST);
   const navigate = useNavigate();
@@ -161,9 +161,13 @@ const App: React.FC = ({ children }) => {
           <Flex hAlignContent="center" vAlignContent="center">
             <Stack orientation="horizontal" spacing="space60">
               <Text style={{ fontSize: 20, color: "white" }} as="p">
-                Powered by Twilio Verify
+                Powered by Twilio Verify!
               </Text>
-              <img style={{ width: 30 }} alt="twilio-logo" src="twilio.png" />
+              <img
+                style={{ width: 30, marginTop: "5px" }}
+                alt="twilio-logo"
+                src="twilio.png"
+              />
               {location.pathname !== "/" && gameTimeout <= 0 && (
                 <Button variant="secondary" onClick={handleManualReset}>
                   Reset Game

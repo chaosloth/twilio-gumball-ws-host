@@ -52,7 +52,13 @@ body,
   background: #7f7f7f !important;
   background: rgba(0, 0, 0, 0.5) !important;
   border-radius: 20px;
+  min-width: 1000px;
 }
+
+.channelSelector>div>div>div {
+  display: inline-flex;
+}
+
 
 .logo {
   width: 100px;

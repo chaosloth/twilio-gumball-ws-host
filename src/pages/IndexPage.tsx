@@ -9,7 +9,7 @@ export const IndexPage: React.FC = () => {
   };
 
   return (
-    <Flex paddingTop="space200" hAlignContent="center" height="100vh" grow>
+    <Flex paddingTop="space80" hAlignContent="center" height="100vh" grow>
       <Text as="div" textAlign="center">
         <h2 className="text_shadows">Check in at booth to start!</h2>
 

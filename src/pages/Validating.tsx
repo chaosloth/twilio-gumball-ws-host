@@ -18,7 +18,7 @@ export const Validating: React.FC = () => {
   }, [counter]);
 
   return (
-    <Flex padding="space200" hAlignContent="center" height="100vh" grow>
+    <Flex padding="space80" hAlignContent="center" height="100vh" grow>
       <Text as="div" textAlign="center">
         <img alt="candy" src="candy.png" className="candy" />
         <Heading as="h2" variant="heading10">

@@ -24,7 +24,7 @@ export const Dispense: React.FC = () => {
   };
 
   return (
-    <Flex padding="space200" hAlignContent="center" height="100vh" grow>
+    <Flex padding="space80" hAlignContent="center" height="100vh" grow>
       <Text as="div" textAlign="center">
         <Heading as="h2" variant="heading10"></Heading>
         <h2 className="text_shadows">It's really you!</h2>
